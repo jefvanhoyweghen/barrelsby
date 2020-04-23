@@ -1,21 +1,19 @@
-import fs from "fs";
-import path from "path";
-
-import { buildFileSystemBarrel } from "./builders/fileSystem";
-import { buildFlatBarrel } from "./builders/flat";
-import { addHeaderPrefix } from "./builders/header";
-import { loadDirectoryModules } from "./modules";
-import { BaseUrl } from "./options/baseUrl";
-import { Logger } from "./options/logger";
-import { SemicolonCharacter } from "./options/noSemicolon";
-import { StructureOption } from "./options/options";
-import { QuoteCharacter } from "./options/quoteCharacter";
+import fs from 'fs';
+import path from 'path';
+import { buildFileSystemBarrel } from './builders/fileSystem';
+import { buildFlatBarrel } from './builders/flat';
+import { loadDirectoryModules } from './modules';
+import { BaseUrl } from './options/baseUrl';
+import { Logger } from './options/logger';
+import { SemicolonCharacter } from './options/noSemicolon';
+import { StructureOption } from './options/options';
+import { QuoteCharacter } from './options/quoteCharacter';
 import {
   convertPathSeparator,
   Directory,
   Location,
-  thisDirectory
-} from "./utilities";
+  thisDirectory,
+} from './utilities';
 
 export function buildBarrels(
   destinations: Directory[],
@@ -33,10 +31,10 @@ export function buildBarrels(
   let builder: BarrelBuilder;
   switch (structure) {
     default:
-    case "flat":
+    case 'flat':
       builder = buildFlatBarrel;
       break;
-    case "filesystem":
+    case 'filesystem':
       builder = buildFileSystemBarrel;
       break;
   }
@@ -88,14 +86,14 @@ function buildBarrel(
     return;
   }
   // Add the header
-  const contentWithHeader = addHeaderPrefix(content);
-  fs.writeFileSync(destination, contentWithHeader);
+  // const contentWithHeader = addHeaderPrefix(content);
+  fs.writeFileSync(destination, content);
   // Update the file tree model with the new barrel.
   if (!directory.files.some((file: Location) => file.name === barrelName)) {
     const convertedPath = convertPathSeparator(destination);
     const barrel = {
       name: barrelName,
-      path: convertedPath
+      path: convertedPath,
     };
     logger(`Updating model barrel @ ${convertedPath}`);
     directory.files.push(barrel);
@@ -124,7 +122,7 @@ export function buildImportPath(
   const relativePath = path.relative(startLocation, target.path);
   // Get the route and ensure it's relative
   let directoryPath = path.dirname(relativePath);
-  if (directoryPath !== ".") {
+  if (directoryPath !== '.') {
     directoryPath = `.${path.sep}${directoryPath}`;
   }
   // Strip off the .ts or .tsx from the file name.
@@ -136,14 +134,14 @@ export function buildImportPath(
 }
 
 function stripThisDirectory(location: string, baseUrl: BaseUrl) {
-  return baseUrl ? location.replace(thisDirectory, "") : location;
+  return baseUrl ? location.replace(thisDirectory, '') : location;
 }
 
 /** Strips the .ts or .tsx file extension from a path and returns the base filename. */
 export function getBasename(relativePath: string) {
-  const mayBeSuffix = [".ts", ".tsx", ".d.ts"];
+  const mayBeSuffix = ['.ts', '.tsx', '.d.ts'];
   let mayBePath = relativePath;
-  mayBeSuffix.map(suffix => {
+  mayBeSuffix.map((suffix) => {
     const tmpPath = path.basename(relativePath, suffix);
     if (tmpPath.length < mayBePath.length) {
       mayBePath = tmpPath;
