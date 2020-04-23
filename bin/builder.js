@@ -7,17 +7,16 @@ const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const fileSystem_1 = require("./builders/fileSystem");
 const flat_1 = require("./builders/flat");
-const header_1 = require("./builders/header");
 const modules_1 = require("./modules");
 const utilities_1 = require("./utilities");
 function buildBarrels(destinations, quoteCharacter, semicolonCharacter, barrelName, logger, baseUrl, exportDefault, structure, local, include, exclude) {
     let builder;
     switch (structure) {
         default:
-        case "flat":
+        case 'flat':
             builder = flat_1.buildFlatBarrel;
             break;
-        case "filesystem":
+        case 'filesystem':
             builder = fileSystem_1.buildFileSystemBarrel;
             break;
     }
@@ -35,14 +34,14 @@ function buildBarrel(directory, builder, quoteCharacter, semicolonCharacter, bar
         return;
     }
     // Add the header
-    const contentWithHeader = header_1.addHeaderPrefix(content);
-    fs_1.default.writeFileSync(destination, contentWithHeader);
+    // const contentWithHeader = addHeaderPrefix(content);
+    fs_1.default.writeFileSync(destination, content);
     // Update the file tree model with the new barrel.
     if (!directory.files.some((file) => file.name === barrelName)) {
         const convertedPath = utilities_1.convertPathSeparator(destination);
         const barrel = {
             name: barrelName,
-            path: convertedPath
+            path: convertedPath,
         };
         logger(`Updating model barrel @ ${convertedPath}`);
         directory.files.push(barrel);
@@ -56,7 +55,7 @@ function buildImportPath(directory, target, baseUrl) {
     const relativePath = path_1.default.relative(startLocation, target.path);
     // Get the route and ensure it's relative
     let directoryPath = path_1.default.dirname(relativePath);
-    if (directoryPath !== ".") {
+    if (directoryPath !== '.') {
         directoryPath = `.${path_1.default.sep}${directoryPath}`;
     }
     // Strip off the .ts or .tsx from the file name.
@@ -68,13 +67,13 @@ function buildImportPath(directory, target, baseUrl) {
 }
 exports.buildImportPath = buildImportPath;
 function stripThisDirectory(location, baseUrl) {
-    return baseUrl ? location.replace(utilities_1.thisDirectory, "") : location;
+    return baseUrl ? location.replace(utilities_1.thisDirectory, '') : location;
 }
 /** Strips the .ts or .tsx file extension from a path and returns the base filename. */
 function getBasename(relativePath) {
-    const mayBeSuffix = [".ts", ".tsx", ".d.ts"];
+    const mayBeSuffix = ['.ts', '.tsx', '.d.ts'];
     let mayBePath = relativePath;
-    mayBeSuffix.map(suffix => {
+    mayBeSuffix.map((suffix) => {
         const tmpPath = path_1.default.basename(relativePath, suffix);
         if (tmpPath.length < mayBePath.length) {
             mayBePath = tmpPath;
