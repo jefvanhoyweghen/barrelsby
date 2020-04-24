@@ -26,7 +26,8 @@ export function buildBarrels(
   structure: StructureOption | undefined,
   local: boolean,
   include: string[],
-  exclude: string[]
+  exclude: string[],
+  noWildcards?: boolean
 ): void {
   let builder: BarrelBuilder;
   switch (structure) {
@@ -51,7 +52,8 @@ export function buildBarrels(
       exportDefault,
       local,
       include,
-      exclude
+      exclude,
+      !!noWildcards
     )
   );
 }
@@ -68,7 +70,8 @@ function buildBarrel(
   exportDefault: boolean,
   local: boolean,
   include: string[],
-  exclude: string[]
+  exclude: string[],
+  noWildcards: boolean
 ) {
   logger(`Building barrel @ ${directory.path}`);
   const content = builder(
@@ -78,7 +81,8 @@ function buildBarrel(
     semicolonCharacter,
     logger,
     baseUrl,
-    exportDefault
+    exportDefault,
+    noWildcards
   );
   const destination = path.join(directory.path, barrelName);
   if (content.length === 0) {
@@ -108,7 +112,8 @@ export type BarrelBuilder = (
   semicolonCharacter: SemicolonCharacter,
   logger: Logger,
   baseUrl: BaseUrl,
-  exportDefault: boolean
+  exportDefault: boolean,
+  onWildcards?: boolean
 ) => string;
 
 /** Builds the TypeScript */

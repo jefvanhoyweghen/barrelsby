@@ -23,7 +23,7 @@ const NoSemicolon = __importStar(require("./options/noSemicolon"));
 const QuoteCharacter = __importStar(require("./options/quoteCharacter"));
 const RootPath = __importStar(require("./options/rootPath"));
 const Purge = __importStar(require("./purge"));
-describe("main module", () => {
+describe('main module', () => {
     let spySandbox;
     beforeEach(() => {
         spySandbox = sinon_1.default.createSandbox();
@@ -31,53 +31,54 @@ describe("main module", () => {
     afterEach(() => {
         spySandbox.restore();
     });
-    it("should co-ordinate the main stages of the application", () => {
+    it('should co-ordinate the main stages of the application', () => {
         const args = {
-            baseUrl: "https://base-url.com",
+            baseUrl: 'https://base-url.com',
             delete: true,
-            directory: "testRootPath",
-            exclude: ["directory4"],
+            directory: 'testRootPath',
+            exclude: ['directory4'],
             exportDefault: false,
-            include: ["directory2"],
+            include: ['directory2'],
             local: true,
-            location: "top",
-            name: "inputBarrelName",
+            location: 'top',
+            name: 'inputBarrelName',
             noSemicolon: true,
+            noWildcards: false,
             singleQuotes: true,
-            structure: "flat",
-            verbose: true
+            structure: 'flat',
+            verbose: true,
         };
-        const builtTree = { mock: "built tree" };
+        const builtTree = { mock: 'built tree' };
         const buildTreeSpy = spySandbox
-            .stub(FileTree, "buildTree")
+            .stub(FileTree, 'buildTree')
             .returns(builtTree);
-        const destinations = { mock: "destinations" };
+        const destinations = { mock: 'destinations' };
         const getDestinationsSpy = spySandbox
-            .stub(Destinations, "getDestinations")
+            .stub(Destinations, 'getDestinations')
             .returns(destinations);
-        const purgeSpy = spySandbox.stub(Purge, "purge");
-        const buildBarrelsSpy = spySandbox.stub(Builder, "buildBarrels");
+        const purgeSpy = spySandbox.stub(Purge, 'purge');
+        const buildBarrelsSpy = spySandbox.stub(Builder, 'buildBarrels');
         const quoteCharacter = "'";
         const getQuoteCharacterSpy = spySandbox
-            .stub(QuoteCharacter, "getQuoteCharacter")
+            .stub(QuoteCharacter, 'getQuoteCharacter')
             .returns(quoteCharacter);
-        const semicolonCharacter = ";";
+        const semicolonCharacter = ';';
         const getSemicolonCharacterSpy = spySandbox
-            .stub(NoSemicolon, "getSemicolonCharacter")
+            .stub(NoSemicolon, 'getSemicolonCharacter')
             .returns(semicolonCharacter);
         const logger = spySandbox.spy();
-        const getLoggerSpy = spySandbox.stub(Logger, "getLogger").returns(logger);
-        const barrelName = "barrel.ts";
+        const getLoggerSpy = spySandbox.stub(Logger, 'getLogger').returns(logger);
+        const barrelName = 'barrel.ts';
         const getBarrelNameSpy = spySandbox
-            .stub(BarrelName, "getBarrelName")
+            .stub(BarrelName, 'getBarrelName')
             .returns(barrelName);
-        const rootPath = "./directory";
+        const rootPath = './directory';
         const resolveRootPathSpy = spySandbox
-            .stub(RootPath, "resolveRootPath")
+            .stub(RootPath, 'resolveRootPath')
             .returns(rootPath);
-        const baseUrl = "https://base-url.com/src/directory";
+        const baseUrl = 'https://base-url.com/src/directory';
         const getCombinedBaseUrlSpy = spySandbox
-            .stub(BaseUrl, "getCombinedBaseUrl")
+            .stub(BaseUrl, 'getCombinedBaseUrl')
             .returns(baseUrl);
         index_1.default(args);
         chai_1.assert(getQuoteCharacterSpy.calledOnceWithExactly(true));
@@ -89,7 +90,7 @@ describe("main module", () => {
         chai_1.assert(buildTreeSpy.calledOnceWithExactly(rootPath, barrelName, logger));
         chai_1.assert(getDestinationsSpy.calledOnceWithExactly(builtTree, args.location, barrelName, logger));
         chai_1.assert(purgeSpy.calledOnceWithExactly(builtTree, args.delete, barrelName, logger));
-        chai_1.assert(buildBarrelsSpy.calledOnceWithExactly(destinations, quoteCharacter, semicolonCharacter, barrelName, logger, baseUrl, args.exportDefault, args.structure, args.local, args.include, args.exclude));
+        chai_1.assert(buildBarrelsSpy.calledOnceWithExactly(destinations, quoteCharacter, semicolonCharacter, barrelName, logger, baseUrl, args.exportDefault, args.structure, args.local, args.include, args.exclude, args.noWildcards));
     });
 });
 //# sourceMappingURL=index.test.js.map

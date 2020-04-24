@@ -1,17 +1,17 @@
 #! /usr/bin/env node
 
-import { buildBarrels } from "./builder";
-import { getDestinations } from "./destinations";
-import { buildTree } from "./fileTree";
-import { getBarrelName } from "./options/barrelName";
-import { getCombinedBaseUrl } from "./options/baseUrl";
-import { getLogger } from "./options/logger";
-import { getSemicolonCharacter } from "./options/noSemicolon";
-import { Arguments, LocationOption } from "./options/options";
-import { getQuoteCharacter } from "./options/quoteCharacter";
-import { resolveRootPath } from "./options/rootPath";
-import { purge } from "./purge";
-import { Directory } from "./utilities";
+import { buildBarrels } from './builder';
+import { getDestinations } from './destinations';
+import { buildTree } from './fileTree';
+import { getBarrelName } from './options/barrelName';
+import { getCombinedBaseUrl } from './options/baseUrl';
+import { getLogger } from './options/logger';
+import { getSemicolonCharacter } from './options/noSemicolon';
+import { Arguments, LocationOption } from './options/options';
+import { getQuoteCharacter } from './options/quoteCharacter';
+import { resolveRootPath } from './options/rootPath';
+import { purge } from './purge';
+import { Directory } from './utilities';
 
 // TODO: Document how users can call this from their own code without using the CLI.
 // TODO: We might need to do some parameter validation for that.
@@ -51,7 +51,8 @@ function main(args: Arguments) {
     args.structure,
     !!args.local,
     ([] as string[]).concat(args.include || []),
-    ([] as string[]).concat(args.exclude || [])
+    ([] as string[]).concat(args.exclude || []),
+    !!args.noWildcards
   );
 }
 

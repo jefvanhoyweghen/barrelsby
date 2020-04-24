@@ -1,2 +1,2 @@
-import Yargs from "yargs";
+import Yargs from 'yargs';
 export declare function getArgs(): Yargs.Argv;
