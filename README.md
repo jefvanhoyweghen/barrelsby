@@ -47,17 +47,17 @@ import * as Controls from "./src/controls/index";
 
 ### More Reading
 
-* [TattooCoder Blog](http://tattoocoder.com/angular2-barrels/)
+- [TattooCoder Blog](http://tattoocoder.com/angular2-barrels/)
 
 ### Barrelsby Articles
 
-* [Rupesh Tiwari Blog](http://rupeshtiwari.com/create-barrel/)
-* [Medium Article](https://medium.com/@klauskpm/do-a-barrel-export-aa5b79b76b05)
+- [Rupesh Tiwari Blog](http://rupeshtiwari.com/create-barrel/)
+- [Medium Article](https://medium.com/@klauskpm/do-a-barrel-export-aa5b79b76b05)
 
 ### Alternatives
 
-* [Barrelbot](https://github.com/sw-yx/barrelbot)
-* [creeate-index](https://github.com/gajus/create-index)
+- [Barrelbot](https://github.com/sw-yx/barrelbot)
+- [creeate-index](https://github.com/gajus/create-index)
 
 ## Usage
 
@@ -126,7 +126,7 @@ Only include files whose paths match any of the specified regular expressions.
 ### `-l [mode]` or `--location [mode]`
 
 The mode that barrelsby should use to determine where which directories to create barrels in.
-Defaulted to *top*.
+Defaulted to _top_.
 
 - `top` only creates a barrel in the target directory.
 - `below` creates a barrel in every directory just below the target directory.
@@ -146,7 +146,7 @@ appended if not included in the name. Barrels names will be defaulted to `index.
 
 ### `-s [mode]` or `--structure [mode]`
 
-The structure that barrelsby should create inside the barrels. Defaulted to *flat*.
+The structure that barrelsby should create inside the barrels. Defaulted to _flat_.
 
 #### `flat`
 
@@ -190,6 +190,10 @@ Use 'single quotes' in the generated barrel files instead of the default "double
 ### `-S` or `--noSemicolon`
 
 Omit semicolons from the end of lines in the generated barrel files.
+
+### `-W` or `--noWildcards`
+
+Omit wildcards and define every export item.
 
 ### `-v` or `--version`
 
